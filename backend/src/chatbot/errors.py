@@ -41,7 +41,7 @@ async def _validation_error_handler(_: Request, exc: Exception) -> JSONResponse:
 
 
 async def _unhandled_error_handler(_: Request, exc: Exception) -> JSONResponse:
-    # TODO(observability): log the exception with a request id once tracing is added.
+    # TODO(T5.4): log the exception with a request id once tracing is added.
     return _json(
         500,
         ErrorResponse(

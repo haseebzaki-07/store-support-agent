@@ -3,10 +3,10 @@
 Today it is a single node that asks the LLM for a reply. The structure is here so the roadmap
 items can be added as nodes and edges without reshaping the service layer.
 
-TODO(roadmap: Phase 1): tool-calling loop (order lookup, shipment tracking, inventory).
-TODO(roadmap: Phase 2): retrieval node that grounds answers in policy documents.
-TODO(roadmap: Phase 3): memory node (conversation summary, customer facts).
-TODO(roadmap: Phase 4): approval gate for refunds/exchanges using LangGraph `interrupt`
+TODO(T1.4): tool-calling loop using the tools from T1.1-T1.3.
+TODO(T2.4): retrieval node that grounds answers in policy documents.
+TODO(T3.1, T3.2): memory node (conversation summary, customer facts).
+TODO(T4.2): approval gate for refunds/exchanges using LangGraph `interrupt`
 and a Postgres checkpointer.
 """
 

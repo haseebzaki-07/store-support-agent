@@ -30,7 +30,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     register_error_handlers(app)
     app.include_router(health.router)
     app.include_router(chat.router)
-    # TODO(security): add auth and per-session rate limiting before exposing this publicly.
+    # TODO(T5.3): add auth and per-session rate limiting before exposing this publicly.
     return app
 
 

@@ -1,6 +1,6 @@
 """Prompts.
 
-TODO(roadmap: Phase 2): store policy currently lives in this prompt. Move it into policy
+TODO(T0.2, T2.4): store policy currently lives in this prompt. Move it into policy
 documents under backend/data/ and retrieve it with RAG instead of hard-coding it here.
 """
 
