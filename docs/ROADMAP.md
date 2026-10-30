@@ -13,7 +13,9 @@ Legend: `[x]` done, `[ ]` planned. Items are intentionally small so each can be 
 - [ ] Synthetic demo store: seed script (products, customers, orders, shipments)
 - [ ] Policy documents in `backend/data/policies/` (returns, shipping, warranty)
 - [ ] Real LLM provider (`OpenAIProvider`): timeouts, retries, error mapping
-- [ ] Remove the legacy TypeScript backend from `web/` once the above is verified
+- [ ] Remove the legacy TypeScript backend from `web/` (route handlers, Prisma, Redis cache) once the above is verified
+- [ ] Fix `web/package-lock.json` (out of sync with `package.json`, so `npm ci` fails) and add a web CI job (typecheck)
+- [ ] Add a readiness check (`/health/ready`) that verifies the database connection
 
 ## Phase 1: Agent core (tools)
 
