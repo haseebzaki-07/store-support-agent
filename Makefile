@@ -12,8 +12,8 @@ db-up: ## Start Postgres (pgvector) in Docker
 db-down: ## Stop Postgres (data is kept in a Docker volume)
 	docker compose down
 
-backend-install: ## Install backend dependencies (uv sync)
-	cd backend && uv sync
+backend-install: ## Install backend deps (add EXTRAS="--extra anthropic" for a model provider)
+	cd backend && uv sync $(EXTRAS)
 
 backend-dev: ## Run the API on http://localhost:8000
 	cd backend && uv run uvicorn chatbot.main:app --reload --port 8000

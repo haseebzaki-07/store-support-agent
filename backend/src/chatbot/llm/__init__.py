@@ -1,19 +1,21 @@
 from chatbot.config import Settings
 from chatbot.llm.base import LLMError, LLMMessage, LLMProvider
 from chatbot.llm.fake import FakeLLM
-from chatbot.llm.openai_provider import OpenAIProvider
+from chatbot.llm.langchain_provider import LangChainProvider, build_langchain_provider
 
-__all__ = ["FakeLLM", "LLMError", "LLMMessage", "LLMProvider", "OpenAIProvider", "build_llm"]
+__all__ = [
+    "FakeLLM",
+    "LLMError",
+    "LLMMessage",
+    "LLMProvider",
+    "LangChainProvider",
+    "build_langchain_provider",
+    "build_llm",
+]
 
 
 def build_llm(settings: Settings) -> LLMProvider:
+    """Build the configured provider. "fake" needs no key; everything else is configuration."""
     if settings.llm_provider == "fake":
         return FakeLLM()
-    if settings.openai_api_key is None:
-        raise RuntimeError("OPENAI_API_KEY is required when LLM_PROVIDER=openai")
-    return OpenAIProvider(
-        api_key=settings.openai_api_key.get_secret_value(),
-        model=settings.llm_model,
-        timeout_s=settings.llm_timeout_s,
-        max_tokens=settings.llm_max_tokens,
-    )
+    return build_langchain_provider(settings)

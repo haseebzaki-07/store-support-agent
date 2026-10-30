@@ -33,6 +33,7 @@ A store support agent: it answers customer questions, looks up orders, reads pol
 - Async SQLAlchemy 2.x. Schema changes only through Alembic: `cd backend && uv run alembic revision --autogenerate -m "message"`, then review the generated file.
 - The API is camelCase JSON and is consumed by `web/app/page.tsx` (`POST /api/chat/message`, `GET /api/chat/message?sessionId=`). Do not change the contract without updating the UI.
 - Talk to LLMs only through `LLMProvider` (`backend/src/chatbot/llm/`). Tests use `FakeLLM`; **never call a real LLM API from tests**.
+- Stay vendor-neutral: never import a vendor SDK outside `llm/`. Providers are chosen by `LLM_PROVIDER`/`LLM_MODEL`/`LLM_BASE_URL`; per-provider argument mapping lives in `llm/langchain_provider.py`, and each provider's package is an optional extra in `pyproject.toml`. The same pattern applies to embeddings (planned, T2.1).
 - Anything that changes business state (refund, exchange, cancel) must go through the approval flow (planned). The agent proposes; a human approves. Never execute such actions directly from the agent.
 - Add or update tests with every behavior change. Keep commits small and focused.
 
@@ -40,4 +41,5 @@ A store support agent: it answers customer questions, looks up orders, reads pol
 
 - No secrets and no real customer data anywhere in the repo, tests, fixtures or prompts. All data is synthetic. Use `.env` files (git-ignored) for local settings; only commit `*.example`.
 - Do not hard-code store policy in prompts; policy belongs in `backend/data/` documents (retrieval is planned).
-- Leave `TODO(...)` comments only for work that is genuinely planned, and mirror it in `docs/ROADMAP.md`.
+- Leave `TODO(...)` comments only for work that is genuinely planned, tagged with the task id from `docs/ROADMAP.md` (e.g. `TODO(T1.4)`).
+- This is an application. Do not add model training, fine-tuning, or LLM evaluation tooling.

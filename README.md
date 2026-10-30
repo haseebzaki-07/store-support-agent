@@ -7,8 +7,9 @@ An AI customer-support agent for small online stores. The goal is an agent that 
 ## What works today
 
 - Chat UI (Next.js) talking to a FastAPI backend, with conversations persisted in Postgres.
-- A minimal LangGraph agent (one node) behind a swappable `LLMProvider`.
-- A deterministic **fake LLM** so everything runs and tests pass with no API keys.
+- A minimal LangGraph agent (one node).
+- **Platform-independent model access:** OpenAI, Anthropic, Google Gemini, local models via Ollama, or any OpenAI-compatible server, chosen by configuration (see [Model providers](#model-providers)).
+- A deterministic **fake LLM** (the default) so everything runs and tests pass with no API keys.
 
 ## What is planned
 
@@ -53,6 +54,28 @@ make web-dev            # UI on http://localhost:3000
 ```
 
 Run `make help` for all commands, and `make check` for lint, type-check and tests.
+
+## Model providers
+
+The agent talks to models only through an `LLMProvider` interface, so the vendor is a configuration choice, not a code change. Set these in `backend/.env`:
+
+| `LLM_PROVIDER` | Works with | Install | API key |
+|---|---|---|---|
+| `fake` (default) | nothing; deterministic replies for development and tests | none | none |
+| `openai` | OpenAI, and any OpenAI-compatible server (vLLM, LM Studio, OpenRouter, ...) via `LLM_BASE_URL` | `--extra openai` | `OPENAI_API_KEY` or `LLM_API_KEY` |
+| `anthropic` | Anthropic Claude models | `--extra anthropic` | `ANTHROPIC_API_KEY` or `LLM_API_KEY` |
+| `google_genai` | Google Gemini | `--extra google` | `GOOGLE_API_KEY` or `LLM_API_KEY` |
+| `ollama` | Local models served by Ollama | `--extra ollama` | none |
+
+```bash
+# example: local model through Ollama
+make backend-install EXTRAS="--extra ollama"
+# then in backend/.env:
+#   LLM_PROVIDER=ollama
+#   LLM_MODEL=<a model you have pulled>
+```
+
+`LLM_MODEL` is required for every provider except `fake`; there is deliberately no vendor default. Provider packages are optional extras to keep installs small, and a missing one produces an error with the exact command to run. Only the fake and OpenAI-compatible paths are exercised end to end in the test suite (against a local stub server); the other providers are configuration-checked but not tested against live services.
 
 ## Data and secrets
 
