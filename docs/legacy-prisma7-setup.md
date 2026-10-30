@@ -1,3 +1,5 @@
+> **Archived.** This document describes the original TypeScript-only version of the project (Next.js route handlers, Prisma, Redis). The project now uses a Python backend; see the root `README.md`. Kept for reference until the legacy backend is removed.
+
 # Prisma 7 Setup Guide
 
 ## Overview

@@ -1,3 +1,5 @@
+> **Archived.** This document describes the original TypeScript-only version of the project (Next.js route handlers, Prisma, Redis). The project now uses a Python backend; see the root `README.md`. Kept for reference until the legacy backend is removed.
+
 # AI Live Chatbot
 
 A production-ready AI-powered customer support chatbot built with Next.js, PostgreSQL, and OpenAI. Features multi-channel support architecture, Redis caching, and extensible tool integrations.
